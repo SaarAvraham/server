@@ -61,6 +61,30 @@ public class AsyncConfiguration implements AsyncConfigurer {
     public CallableProcessingInterceptor callableProcessingInterceptor() {
         return new TimeoutCallableProcessingInterceptor() {
             @Override
+            public <T> void beforeConcurrentHandling(NativeWebRequest request, Callable<T> task) throws Exception {
+                log.error("beforeConcurrentHandling!");
+                super.beforeConcurrentHandling(request, task);
+            }
+
+            @Override
+            public <T> void preProcess(NativeWebRequest request, Callable<T> task) throws Exception {
+                log.error("preProcess!");
+                super.preProcess(request, task);
+            }
+
+            @Override
+            public <T> void postProcess(NativeWebRequest request, Callable<T> task, Object concurrentResult) throws Exception {
+                log.error("postProcess!");
+                super.postProcess(request, task, concurrentResult);
+            }
+
+            @Override
+            public <T> void afterCompletion(NativeWebRequest request, Callable<T> task) throws Exception {
+                log.error("Completed!");
+                super.afterCompletion(request, task);
+            }
+
+            @Override
             public <T> Object handleTimeout(NativeWebRequest request, Callable<T> task) throws Exception {
                 log.error("timeout!");
                 return super.handleTimeout(request, task);

@@ -96,6 +96,12 @@ public class Controller {
                             " dsaflkasjlkadsjgijiotewjaiojteroiajgfmadfagnfkjnwaejnjtkjnwebvngngnfgfhhgftjanbgfdfbgdbhdfgfjknawejtnwaejndsgsdagfsdds "
                             + System.lineSeparator();
                     zipOut.write(msg.getBytes());
+
+
+
+                    if(i == 300){
+                        throw new RuntimeException();
+                    }
                 }
 
                 zipOut.close();

@@ -22,7 +22,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
     @ExceptionHandler(value = { Exception.class})
     protected ResponseEntity<Object> handleConflict(RuntimeException ex, NativeWebRequest request) throws Exception {
 
-        Thread.currentThread().interrupt();
+//        Thread.currentThread().interrupt();
 //        callableProcessingInterceptor.handleTimeout(request, null);
         return null;
     }
