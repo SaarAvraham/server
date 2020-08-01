@@ -75,7 +75,12 @@ public class AsyncConfiguration implements AsyncConfigurer {
             @Override
             public <T> void postProcess(NativeWebRequest request, Callable<T> task, Object concurrentResult) throws Exception {
                 log.error("postProcess!");
-                super.postProcess(request, task, concurrentResult);
+//                super.postProcess(request, task, concurrentResult);
+
+                if(concurrentResult instanceof RuntimeException){
+                    System.out.println("runtimeexception");
+                    Object o = super.handleTimeout(request, task);
+                }
             }
 
             @Override

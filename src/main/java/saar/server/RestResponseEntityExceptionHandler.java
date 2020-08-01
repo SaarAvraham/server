@@ -12,18 +12,17 @@ import org.springframework.web.context.request.async.AsyncRequestTimeoutExceptio
 import org.springframework.web.context.request.async.CallableProcessingInterceptor;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@ControllerAdvice
-public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
-
-    @Autowired
-    CallableProcessingInterceptor callableProcessingInterceptor;
-
-
-    @ExceptionHandler(value = { Exception.class})
-    protected ResponseEntity<Object> handleConflict(RuntimeException ex, NativeWebRequest request) throws Exception {
-
-//        Thread.currentThread().interrupt();
-//        callableProcessingInterceptor.handleTimeout(request, null);
-        return null;
-    }
-}
+//@ControllerAdvice
+//public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
+//
+//    @Autowired
+//    CallableProcessingInterceptor callableProcessingInterceptor;
+//
+//    @ExceptionHandler(value = { Exception.class})
+//    protected ResponseEntity<Object> handleConflict(RuntimeException ex, NativeWebRequest request) throws Exception {
+//
+////        Thread.currentThread().interrupt();
+////        callableProcessingInterceptor.handleTimeout(request, null);
+//        return null;
+//    }
+//}

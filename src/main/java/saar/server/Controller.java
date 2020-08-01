@@ -43,23 +43,18 @@ public class Controller {
 
     @GetMapping("/srb")
     public ResponseEntity<StreamingResponseBody> handleRbe(final HttpServletResponse response, HttpServletRequest request) throws IOException, ServletException {
-
-        response.setTrailerFields(new Supplier<Map<String, String>>() {
-            @Override
-            public Map<String, String> get() {
-                HashMap<String, String> trailerFields = new HashMap<>();
-                trailerFields.put("Connection", "close");
-                return trailerFields;
-            }
-        });
-
-
-//        response.getOutputStream().close();
-
+        response.setHeader(
+                "Content-Disposition",
+                "attachment;filename=sample.txt");
         StreamingResponseBody stream = out -> {
             for (int i = 0; i < 5000; i++) {
                 String msg = i + " dsaflkasjlkadsjgijiotewjaiojteroiajgfmadfagnfkjnwaejnjtkjnwebvngngnfgfhhgftjanbgfdfbgdbhdfgfjknawejtnwaejndsgsdagfsdds "
                         + System.lineSeparator();
+
+                if(i % 10 == 0){
+                    out.flush();
+                }
+
                 if (i == 2000) {
 //                    response.sendError(503, "Error while streaming");
 //                    response.reset()
@@ -98,6 +93,9 @@ public class Controller {
                     zipOut.write(msg.getBytes());
 
 
+                    if(i%10 == 0){
+                        zipOut.flush();
+                    }
 
                     if(i == 300){
                         throw new RuntimeException();
