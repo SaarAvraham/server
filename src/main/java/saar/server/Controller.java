@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Supplier;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -30,12 +31,6 @@ public class Controller {
     private final Logger logger = LoggerFactory.getLogger(Controller.class);
 
     private static int counter = 1;
-
-    private static Map<String, String> get() {
-        HashMap<String, String> stringStringHashMap = new HashMap<>();
-        stringStringHashMap.put("Test", "Test123412421412421");
-        return stringStringHashMap;
-    }
 
     @GetMapping("/counter")
     public @ResponseBody
@@ -49,13 +44,20 @@ public class Controller {
         response.setHeader(
                 "Content-Disposition",
                 "attachment;filename=sample.txt");
-        response.setTrailerFields(Controller::get);
+        AtomicBoolean success = new AtomicBoolean(true);
+        response.setTrailerFields(() -> {
+            HashMap<String, String> stringStringHashMap = new HashMap<>();
+            stringStringHashMap.put("Success:", String.valueOf(success.get()));
+            return stringStringHashMap;
+        });
         StreamingResponseBody stream = out -> {
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5000; i++) {
                 String msg = i + " dsaflkasjlkadsjgijiotewjaiojteroiajgfmadfagnfkjnwaejnjtkjnwebvngngnfgfhhgftjanbgfdfbgdbhdfgfjknawejtnwaejndsgsdagfsdds "
                         + System.lineSeparator();
 
-                if (i % 1 == 0) {
+
+
+                if (i % 10 == 0) {
                     out.flush();
                 }
 
